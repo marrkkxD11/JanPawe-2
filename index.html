@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jan Paweł Drugi Kremówki sobie jadł 🍰</title>
+<style>
+*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:Arial,sans-serif;color:#fff;text-align:center;background:#b98d4d url('kremowka.png') center/cover fixed;overflow:hidden}body:before{content:"";position:fixed;inset:0;background:rgba(60,35,10,.28);z-index:-1}.panel{position:relative;margin:7vh auto 0;padding:28px 24px;max-width:720px;border-radius:24px;background:rgba(0,0,0,.55);backdrop-filter:blur(5px);box-shadow:0 15px 50px rgba(0,0,0,.35)}h1{margin:0 0 10px;font-size:clamp(30px,6vw,56px);text-shadow:0 3px 10px #000}.subtitle{font-size:18px;margin:0 0 18px}.timer{font-size:25px;font-weight:700;margin:15px}.btn{border:0;border-radius:14px;padding:13px 20px;font-size:17px;font-weight:700;cursor:pointer;background:#fff;color:#5b3a16}.btn:hover{transform:scale(1.04)}.pope{position:fixed;left:50%;bottom:-500px;transform:translateX(-50%) scale(.8);width:min(330px,70vw);max-height:70vh;object-fit:contain;filter:drop-shadow(0 15px 18px rgba(0,0,0,.55));opacity:0;transition:bottom 1s ease,transform 1s ease,opacity .5s;z-index:5}.pope.show{bottom:8vh;transform:translateX(-50%) scale(1);opacity:1}.credit{position:fixed;bottom:10px;left:10px;right:10px;font-size:12px;text-shadow:0 2px 5px #000}.flash{animation:flash .7s}@keyframes flash{0%,100%{filter:brightness(1)}50%{filter:brightness(1.8)}}
+</style>
+</head>
+<body>
+<div class="panel">
+<h1>🍰 Kremówkowy Papież 🕊️</h1>
+<p class="subtitle">Co jakiś czas papież robi hej hej a czasami robi bye bye (jak strona sie wywali.</p>
+<div class="timer">Następne pojawienie: <span id="count">10</span>s</div>
+<button class="btn" id="now">Niech papież wyskoczy teraz byczq 👀</button>
+</div>
+<img id="pope" class="pope" alt="Jan Paweł II" src="">
+<div class="credit">Tło: własne zdjęcie kremówki • zdjęcie papieża: Wikimedia Commons, domena publiczna</div>
+<script>
+const INTERVAL=15;
+let seconds=INTERVAL;
+
+const count=document.getElementById('count');
+const pope=document.getElementById('pope');
+const now=document.getElementById('now');
+
+const zdjecia = [
+    "papiez/papiez1.jpe",
+    "papiez/papiez2.jpe",
+    "papiez/papiez3.jpe",
+    "papiez/papiez4.jpe",
+    "papiez/papiez5.jpe"
+];
+
+function showPope(){
+    const losowe=Math.floor(Math.random()*zdjecia.length);
+    pope.src=zdjecia[losowe];
+
+    pope.classList.remove('show');
+    void pope.offsetWidth;
+    pope.classList.add('show','flash');
+
+    setTimeout(()=>pope.classList.remove('flash'),700);
+    setTimeout(()=>pope.classList.remove('show'),7000);
+
+    seconds=INTERVAL;
+    count.textContent=seconds;
+}
+
+setInterval(()=>{
+    seconds--;
+    count.textContent=seconds;
+
+    if(seconds<=0) showPope();
+},1000);
+
+now.addEventListener('click',showPope);
+</script>
+</body>
+</html>
